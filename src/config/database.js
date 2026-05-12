@@ -2,6 +2,11 @@
 import '../config/env.js';
 import mysql from 'mysql2/promise';
 
+// SSL config — required for Aiven cloud MySQL
+const sslConfig = process.env.DB_SSL === 'true'
+  ? { rejectUnauthorized: false } // Aiven uses a CA cert; false works for testing
+  : false;
+
 // Create connection pool
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
@@ -13,7 +18,8 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
   enableKeepAlive: true,
-  keepAliveInitialDelay: 0
+  keepAliveInitialDelay: 0,
+  ssl: sslConfig
 });
 
 // Test database connection
