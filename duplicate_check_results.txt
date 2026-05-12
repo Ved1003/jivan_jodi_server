@@ -1,0 +1,51 @@
+🔍 Checking for duplicate users...
+
+✅ No duplicate emails found
+
+📧 Checking ved@gmail.com specifically...
+
+Found 1 user(s) with email ved@gmail.com:
+[
+  {
+    "id": 6,
+    "email": "ved@gmail.com",
+    "phone": "6778976654",
+    "role": "user",
+    "status": "active",
+    "created_at": "2025-12-31T18:57:29.000Z",
+    "email_verified": 1
+  }
+]
+
+💎 Checking subscriptions for these users...
+
+
+User ID 6 subscriptions:
+[
+  {
+    "id": 1,
+    "user_id": 6,
+    "plan_id": "premium_yearly",
+    "status": "active",
+    "start_date": "2026-01-07T07:13:41.000Z",
+    "end_date": "2027-01-07T07:13:41.000Z"
+  },
+  {
+    "id": 2,
+    "user_id": 6,
+    "plan_id": "boost_3m",
+    "status": "active",
+    "start_date": "2026-01-07T10:54:20.000Z",
+    "end_date": "2026-04-07T10:54:20.000Z"
+  },
+  {
+    "id": 6,
+    "user_id": 6,
+    "plan_id": "premium_yearly",
+    "status": "active",
+    "start_date": "2026-01-10T10:05:10.000Z",
+    "end_date": "2027-01-10T10:05:10.000Z"
+  }
+]
+
+✅ Database check complete
