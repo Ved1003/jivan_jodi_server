@@ -23,25 +23,31 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // CORS configuration
+// FRONTEND_URL can be a comma-separated list of allowed origins
+// e.g. FRONTEND_URL=https://my-app.vercel.app,https://staging.myapp.com
+const getFrontendOrigins = () => {
+    const envUrls = process.env.FRONTEND_URL
+        ? process.env.FRONTEND_URL.split(',').map(u => u.trim()).filter(Boolean)
+        : [];
+    return [
+        'http://192.168.0.11:8080',
+        'http://localhost:8080',
+        'http://localhost:5173',
+        'http://localhost:4173',
+        ...envUrls
+    ].filter(Boolean);
+};
+
 app.use(cors({
     origin: function (origin, callback) {
-        const allowedOrigins = [
-            'http://192.168.0.11:8080',
-            'http://localhost:8080',
-            'http://localhost:5173', // Vite default port
-            'http://localhost:4173', // Vite preview port
-            process.env.FRONTEND_URL
-        ].filter(Boolean);
+        const allowedOrigins = getFrontendOrigins();
 
-        // Allow requests with no origin (like mobile apps or curl requests)
+        // Allow requests with no origin (like mobile apps, curl, Postman)
         if (!origin) return callback(null, true);
 
-        if (allowedOrigins.indexOf(origin) === -1) {
-            // For development, log the blocked origin
+        if (!allowedOrigins.includes(origin)) {
             if (process.env.NODE_ENV === 'development') {
                 console.log('CORS blocked origin:', origin);
-                // In dev, we might want to allow it temporarily for easier debugging
-                // return callback(null, true); 
             }
             return callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'), false);
         }
